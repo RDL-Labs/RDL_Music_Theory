@@ -1,7 +1,7 @@
 # RDL音楽_Core
 
-*T3：応用層 / CREATE・MATH / DRAFT v0.3*
-*依存：RDL_Core 新T0 / RDL_Modules 新T1*
+*T3：応用層 / CREATE・MATH / DRAFT v0.4*
+*依存：RDL_Core 現行T0 / RDL_Modules 現行T1*
 *上位：RDL音楽理論*
 
 ---
@@ -23,8 +23,10 @@ Coreは、
 ```text
 どの有限境界Bで
 何が対象側に提示され
-自己側の有限関係拘束構造が何を解釈・予測・応答し
+どの有限作用断面RIB_Bが実際に関与し
+自己側の有限関係拘束構造M_Bが何を解釈・予測・応答し
 何が差として現れ
+何が有限review後も未解決として残り
 何が更新候補になり
 なお何が未回収として残るか
 ```
@@ -44,8 +46,8 @@ S^{music}_t
 B_t,
 SILN^{music}_{B_t,t},
 W^{music}_{B_t,t},
+RIB_{B_t,t},
 M^{self}_{B_t,t},
-EFP_t,
 F_t,
 E_{B_t,t},
 H_{B_t,t},
@@ -53,16 +55,16 @@ H_{B_t,t},
 \rangle
 \]
 
-ここでの \(S^{music}_t\) は、T0へ新しい基底量を追加するものではない。音楽Moduleが現在の観測・記述に使う検証用パケットである。
+ここでの \(S^{music}_t\) は、T0へ新しい基底量を追加するものではない。音楽Moduleが現在の観測・記述に使う検証用パケットである。`W_music`、Γ、record、fixtureもMusic-localな補助役割であり、T0 primitiveへ昇格させない。
 
-新T0/T1との責務は次のように分ける。
+現行T0/T1との責務は次のように分ける。
 
 ```text
 対象側の有限構造:
   SILN_music / W_music
 
-入力作用:
-  EFP
+有限作用断面:
+  RIB_B
 
 自己側の有限関係拘束構造:
   M_B^device
@@ -78,15 +80,25 @@ H_{B_t,t},
   fixture
 ```
 
-したがって、Music対象そのものを直ちに `M_B` と呼ばない。対象側に現れている音列・和声・拍節・音色・文脈は、まず `SILN_music` または `W_music` として扱い、それをどの自己側 `M_B` が解釈・予測・応答するかを分ける。
+したがって、Music対象そのものを直ちに `M_B` と呼ばない。対象側に現れている音列・和声・拍節・音色・文脈は、まず `SILN_music` または `W_music` として扱う。それが実際に装置・分析器・聴取者との相互作用に入る有限断面を `RIB_B` とし、それをどの自己側 `M_B` が解釈・予測・応答するかを分ける。
 
 ---
 
-## ■ 2. B：境界
+## ■ 2. B：有限境界
 
 \(B\) は、現在何を音楽的単位・基準として扱うかを決める有限境界である。
 
-Bは固定的な容器ではなく、対象・範囲・尺度・語彙・差異を選び、境界を引く操作である。
+Bは固定的な容器ではなく、少なくとも次をPurposeに応じて有限に固定する。
+
+```text
+Purpose
+対象範囲
+interaction / action section
+選択する関係・次元
+時間窓・分解能
+比較条件
+必要な提示・観測条件
+```
 
 例：
 
@@ -102,13 +114,17 @@ B_timbre
 
 複数のBは同時に存在できる。Bは固定されず、時間と目的によって変化する。
 
+同じ曲・同じ波形でも、聴取者、分析器、提示順、時間窓、比較規則、選択関係が変われば別の有限Bとして扱いうる。
+
+有限Bを置く限り、なお未回収関係ξが残る。
+
 ---
 
 ## ■ 3. SILN_music / W_music：対象側の有限関係構造
 
 `SILN_music` は、現在の有限境界Bのもとで対象側に提示される音楽的関係構造である。
 
-`W_music` は、そのSILN内で回収・比較される関係である。
+`W_music` は、そのSILN内で回収・比較されるMusic-localな関係記述である。
 
 ```text
 W_pitch
@@ -123,11 +139,13 @@ W_form
 
 同じ要素でも、Bが変わればWの意味・重みは変わりうる。
 
+`W_music` はMusic側の作業・比較記述であり、T0へ新しい基底量を追加するものではない。
+
 ---
 
 ## ■ 4. M_B：自己側の有限関係拘束構造
 
-新T0に合わせ、Music Coreでは `M_B` を次のように扱う。
+現行T0に合わせ、Music Coreでは `M_B` を次のように扱う。
 
 ```text
 M_B
@@ -143,6 +161,9 @@ Bのもとで現在の
 Music対象
   -> SILN_music / W_music
 
+finite interaction / action section
+  -> RIB_B
+
 listener / analyzer / device側
   -> M_B^listener
   -> M_B^analysis
@@ -153,7 +174,7 @@ listener / analyzer / device側
 
 ```text
 M_B^device:
-  検出器・レンダラ・分析器が入力を読むための有限関係拘束構造
+  検出器・レンダラ・分析器が有限作用断面を読むための有限関係拘束構造
 
 M_B^analysis:
   分析者が関係を比較・分類するための有限関係拘束構造
@@ -172,7 +193,7 @@ M_B^context:
 
 ### 4.1 関係拘束強度の任意補助
 
-Core v2.0に合わせ、Music側でも `C_rel` と `I(M_B)` を任意補助概念として受ける。
+Core v2.0で導入された `C_rel` と `I(M_B)` は、Music側では任意補助概念として扱う。
 
 ```text
 C_rel:
@@ -197,32 +218,42 @@ harmonic brightness proxyは調波プロファイルの記述量であり、そ�
 
 ---
 
-## ■ 5. F：M_Bを通した作用解釈・予測
+## ■ 5. RIB_B / F：有限作用断面とM_Bを通した作用解釈・予測
 
-新T0に合わせ、Fは「実際に鳴った音」そのものではない。
+現行T0に合わせ、Fは「実際に鳴った音」そのものではない。
 
 ```text
-F(t)      = interp(M_B, EFP(t))
-F'(t+Δ)   = interp(M_B, EFP(t+Δ))
-E(t+Δ)    = Δ(F, F')
+RIB
+ ↓ finite B
+RIB_B(t)
+  ↓ same frozen pre-update M_B
+F(t) = interp(M_B, RIB_B(t))
+
+RIB_B(t+Δ)
+  ↓ same frozen pre-update M_B
+F'(t+Δ) = interp(M_B, RIB_B(t+Δ))
+
+E(t+Δ) = Δ(F, F')
 ```
 
-`EFP` は対象側から現在のM_Bへ渡される入力断面である。音楽側では、実際に提示された音・波形・譜面・MIDI・クリック・文脈などをEFP側に置く。
+`RIB_B` は、より広いinteractionから有限Bで切り出された作用断面である。Music側では、実際に提示・聴取・分析へ入った音、波形、譜面、MIDI、クリック、提示順、時間断面などを、Purposeに必要な範囲で有限に選択する。
+
+対象側の音列・和声・拍節・音色・譜面上の関係そのものは `SILN_music / W_music` として記述し、それらと `RIB_B` を同一視しない。
 
 `F` は、M_Bを通して形成された作用解釈・予測である。M_Bは選択・応答・更新も拘束しうるが、Fそのものを選択結果や更新結果と同一視しない。Fの中には、現在入力の解釈だけでなく、後続関係への予測も含まれうる。ただし、加法的な内部構造は仮定しない。必要な場合だけ `prediction_in_F = pred(F)` と補助的に書く。
 
 音楽側では少なくとも次を分ける。
 
 ```text
-EFP_phys / device output
+RIB_B^device / finite physical presentation
   ↓ interp(M_B^device)
 F_device
 
-EFP_human / presented sound
+RIB_B^listener / finite presented sound
   ↓ interp(M_B^listener)
 F_listener
 
-analysis input
+RIB_B^analysis / finite analysis section
   ↓ interp(M_B^analysis)
 F_analysis
 ```
@@ -238,45 +269,52 @@ F_analysis ≠ F_listener
 
 ---
 
-## ■ 6. E：予測・後続解釈との不整合
+## ■ 6. E：同じ更新前M_BによるF/F'の不整合
 
-\(E\) は、同一の更新前 \(M_B\) によって形成された \(F(t)\) と、同じ \(M_B\) で解釈した後続入力 \(F'\) との差である。
+\(E\) は、同一の更新前 \(M_B\) によって形成された \(F(t)\) と、同じ \(M_B\) で解釈した後続有限作用断面からの \(F'\) との差である。
 
 ```text
-same M_B + EFP(t)
+same pre-update M_B + RIB_B(t)
           ↓
           F(t)
           includes current interpretation and possible prediction
 
-same M_B + EFP(t+Δ)
+same pre-update M_B + RIB_B(t+Δ)
           ↓
           F'(t+Δ)
           ↓
 E(t+Δ) = Δ(F, F')
 ```
 
-ここで \(F'\) は更新後の \(M_B'\) による説明ではない。更新前の同一 \(M_B\) を使うことで、Eを「更新後なら説明できる差」ではなく「現行M_Bで予測・解釈した関係と後続入力から読まれた関係の不整合」として保持する。
+ここで \(F'\) は更新後の \(M_B'\) による説明ではない。FとF'の間でM_Bを更新すると、何が現行構造で生じた差なのかを保持できないため、比較窓では同じ更新前M_Bを固定する。
 
 音楽的には、予想していた解決、拍位置、旋律継続、和声機能、音色の立ち上がり、motif回帰などと、実際に来た後続関係との不整合もEとして扱える。
 
-Eの存在を直ちに誤りとはみなさない。Eは変奏・逸脱・新構造形成の入口にもなる。
+Eの存在や大きさを直ちに誤り・未解決・Hとはみなさない。Eは変奏・逸脱・通常の時間変化・新構造形成の入口にもなる。
 
 ---
 
-## ■ 7. H：未吸収差の残存・蓄積・伝播
+## ■ 7. H：reviewされた未解決差の残存・蓄積・伝播
 
-Hは、Eのうち現在のM_Bで吸収・解消されず、残存・蓄積・伝播した状態である。
+Hは、Eのうち、現在の有限構造による局所吸収・解消可能性を検査し、有限reviewを経てもなお未解決として残存・蓄積・伝播する部分だけを受ける。
 
 ```text
 E
-↓ current M_Bで吸収・解消可能性を検査
-未吸収部分の残存・蓄積・伝播 → H
+↓ current finite M_B / local absorption / explanation を検査
+finite review
+↓
+unresolved remainder -> H_vec
+↓
+H = ||H_vec||
 ```
 
-したがって、Hは単なる時間的積分ではない。吸収された局所変動があってもHはほぼゼロでありうる。回復が不十分な反復入力による蓄積と、単一の大きな入力による保持限界への到達は、どちらも検査対象となる。
+したがって、非ゼロEと `H ≈ 0` は両立する。Eの大きさだけでunresolvedへ昇格させない。
+
+`H = ||H_vec||` のnormはMusic Coreで唯一値を固定しない。実験で具体化する場合は、B・Purpose・比較規則とともに明示する。
 
 ```text
 H ≠ Eの単純な時間的蓄積
+H ≠ |E|そのもの
 H ≠ 音楽的緊張
 H ≠ 不快
 H ≠ 不協和
@@ -290,9 +328,9 @@ H ≠ 不協和
 
 `M_Δ` は、一般的な遷移中間状態ではない。
 
-θは、現在の関係拘束構造が未吸収差Hを保持・吸収し続けられる限界である。具体的な比較規則は検証対象とBに応じて明示する。
+θは、現在の関係拘束構造がreview済み未解決Hを保持・吸収し続けられる限界である。具体的な比較規則は検証対象とBに応じて明示する。
 
-新T0/T1に合わせ、Music Coreでは次の条件でだけ高負荷再編相として扱う。
+現行T0/T1に合わせ、Music Coreでは次の条件でだけ高負荷再編相として扱う。
 
 ```text
 H < θ → maintain / local update
@@ -306,7 +344,7 @@ Music shift
   ≠ 必ず M_Δ
 ```
 
-M_Δを使う場合は、どのHがどの保持限界θに達し、何を維持し、何を再構成するのかを明示する。
+M_Δを使う場合は、どのreview済みHがどの保持限界θに達し、何を維持し、何を再構成するのかを明示する。HはM_Δへの入場条件であり、そのベクトルをそのままM_B'更新ベクトルとして使わない。
 
 ---
 
@@ -327,6 +365,7 @@ M_Δを使う場合は、どのHがどの保持限界θに達し、何を維持�
 ξ ≠ known hidden object
 ξ ≠ storage
 ξ ≠ probe target
+ξ ≠ numeric runtime pressure
 ```
 
 Bを変えれば、以前のBで未回収だった関係の一部を新しいSILN/W/M_B候補として記述できることはある。しかし、そのことはξの最終消去を意味しない。
@@ -334,10 +373,10 @@ Bを変えれば、以前のBで未回収だった関係の一部を新しいSIL
 ```text
 change B / change relation configuration
   ↓
-Probe_B(interaction)
+finite interaction under B'
   ↓
-{Δ}_B
-with ξ'(B) ≠ 0
+RIB_B'
+with ξ(B') ≠ 0
 ```
 
 ---
@@ -348,15 +387,17 @@ with ξ'(B) ≠ 0
 
 ```text
 S_music(t)
-  ↓ interaction / EFP change / B change / Γ change
-Probe_B(interaction)
+  ↓ interaction / RIB_B change / B change / Γ change
+finite observation / comparison under B
   ↓
-{Δ}_B, E, H, update candidate, ξ(B)
+F / F' / E
+  ↓ finite review
+reviewed unresolved H / update candidate / ξ(B)
   ↓
 S_music(t+Δ)
 ```
 
-ただし、これはT0へ新しい基底フローを追加するものではない。Music側で、対象側SILN、自己側M_B、検証側B/Γ/recordを混同しないための操作表記である。
+ただし、これはT0へ新しい基底フローを追加するものではない。Music側で、対象側SILN、有限作用断面RIB_B、自己側M_B、検証側B/Γ/recordを混同しないための操作表記である。
 
 ---
 
@@ -435,15 +476,16 @@ destabilize(M_B^listener hypothesis)
 
 ## ■ 14. shift()
 
-`shift()` は、B、対象側SILN/W、または自己側M_Bのいずれが変わるのかを分けて記述する。
+`shift()` は、B、対象側SILN/W、RIB_B、または自己側M_Bのいずれが変わるのかを分けて記述する。
 
 ```text
 shift(B_A -> B_B)
 shift(SILN_music_A -> SILN_music_B)
+shift(RIB_B_A -> RIB_B_B)
 shift(M_B^context_A -> M_B^context_B)
 ```
 
-ただし、shiftは常にM_Δではない。M_Δを記述するのは、Hがθを超え、高負荷再編相として扱う場合に限る。
+ただし、shiftは常にM_Δではない。M_Δを記述するのは、review済みHがθを超え、高負荷再編相として扱う場合に限る。
 
 転調、再拍節化、和声再解釈、音色変化は、この操作の具体例になりうる。
 
@@ -451,7 +493,7 @@ shift(M_B^context_A -> M_B^context_B)
 
 ## ■ 15. blur()
 
-複数のB、SILN候補、またはM_B候補が競合し、単一解釈へ収束しにくい状態を作る。
+複数のB、SILN候補、RIB_B候補、またはM_B候補が競合し、単一解釈へ収束しにくい状態を作る。
 
 ```text
 blur(B_A, B_B)
@@ -464,7 +506,7 @@ blur(M_B^analysis_A, M_B^analysis_B)
 
 ## ■ 16. break()
 
-現在のB、SILN/W、またはM_Bの維持を意図的に破断させる。
+現在のB、SILN/W、RIB_B、またはM_Bの維持を意図的に破断させる。
 
 ```text
 break(W_interval)
@@ -486,12 +528,12 @@ break ≠ random
 
 旧Coreの `redistribute(ξ)` は廃止する。
 
-ξは操作対象ではない。操作できるのは、B、対象側関係配置、提示条件、Γ、または自己側M_B候補である。
+ξは操作対象ではない。操作できるのは、B、対象側関係配置、提示・作用条件、Γ、または自己側M_B候補である。
 
 ```text
 redistribute_relation_configuration(B, W, presentation, Γ)
   ↓
-Probe_B(interaction)
+new finite interaction / RIB_B
   ↓
 その有限Bで残るξを記述
 ```
@@ -504,22 +546,25 @@ Probe_B(interaction)
 
 ```text
 B:
-どの有限境界で見ているか。
+どのPurpose・対象範囲・interaction/action section・選択関係・比較条件で見ているか。
 
 SILN_music / W_music:
 対象側にはどの関係が提示されているか。
 
+RIB_B:
+その対象とのinteractionから、実際にどの有限作用断面を取得したか。
+
 M_B:
 どの自己側関係拘束構造が解釈・予測・選択・応答・更新を拘束しているか。
 
-EFP / F:
-何が入力断面で、どのM_Bを通して何として読まれたか。
+F / F':
+同じ更新前M_Bで、RIB_B(t)とRIB_B(t+Δ)を何として読んだか。
 
 E / H:
-どの差が出て、何が未吸収として残ったか。
+どの差が出て、有限review後にどの部分だけが未解決として残ったか。
 
 θ / M_Δ:
-既存の関係拘束構造が保持・吸収し続けられる限界以上の未吸収差か。
+review済み未解決Hが、既存の関係拘束構造の保持限界以上か。
 
 ξ:
 この有限Bに伴って、どの未回収関係を記述するか。
@@ -539,10 +584,11 @@ M_B側のどの解釈・予測を残したいか。
 
 Change:
 対象側の何を変えたいか。
+どの提示・作用断面を変えたいか。
 どのM_Bによる読みを変えたいか。
 
 Transition:
-B / SILN / W / M_B のどれをどう動かすか。
+B / SILN / W / RIB_B / M_B のどれをどう動かすか。
 
 Listening:
 structural prediction / perceptual hypothesis / actual listening observation を分けたか。
@@ -583,10 +629,13 @@ structural prediction / perceptual hypothesis / actual listening observation を
 - 音色・attackなど音事象内部の形成関係を扱えない
 - 分析はできるが生成に利用できない
 - 生成はできるが保存構造を説明できない
-- M_Bを対象側構造と自己側整合構造のどちらにも使ってしまう
-- FをEFPや実際の発音そのものと混同してしまう
+- M_Bを対象側構造と自己側関係拘束構造のどちらにも使ってしまう
+- SILN_music / W_music と finite interaction section `RIB_B` を混同してしまう
+- FをRIB_Bや実際の発音そのものと混同してしまう
+- FとF'で異なる更新前M_Bを使ってしまう
+- 非ゼロEや|E|をreviewなしにHとみなしてしまう
 - HをEの単純な時間積分として扱ってしまう
-- ξをProbe対象物、未知の貯蔵庫、または操作対象として扱ってしまう
+- ξをProbe対象物、未知の貯蔵庫、数値圧力、または操作対象として扱ってしまう
 - shiftを常にM_Δとして扱ってしまう
 
 ---
@@ -594,12 +643,16 @@ structural prediction / perceptual hypothesis / actual listening observation を
 ## ■ 22. 最短圧縮
 
 ```text
-RDL Music Core v0.3
+RDL Music Core v0.4
 
 TARGET SIDE
-  EFP
   SILN_music
-  W_music
+  W_music (Music-local auxiliary relation description)
+
+FINITE INTERACTION SECTION
+  RIB
+   ↓ finite B
+  RIB_B
 
 SELF SIDE
   M_B^device
@@ -609,15 +662,23 @@ SELF SIDE
   M_B^context
 
 INTERPRETATION
-  F = interp(M_B, EFP)
-  F' = interp(M_B, EFP')
+  F  = interp(M_B, RIB_B(t))
+  F' = interp(M_B, RIB_B(t+Δ))
+  using the same frozen pre-update M_B
   E = Δ(F, F')
-  H = unresolved / accumulated / propagated part of E under current M_B
-  H ≥ θ -> M_Δ only when current relational constraint structure reaches its holding limit
+  E -> finite review -> unresolved remainder H_vec
+  H = ||H_vec||
+  H ≥ θ -> M_Δ only when reviewed unresolved load reaches the finite holding limit
 
 FINITE B
+  Purpose + target scope + interaction/action section + selected relations + comparison conditions
   ξ(B) remains nonzero
-  ξ is described, not directly operated on
+  ξ is described, not numericized or directly operated on
+
+AUXILIARY
+  W_music / Γ / C_rel / I(M_B)
+  = Music-local descriptive / validation roles
+  ≠ new T0 primitives
 
 OPERATIONS
   preserve()
@@ -631,14 +692,16 @@ OPERATIONS
 
 ANALYSIS
   What is target-side relation?
+  What finite RIB_B was actually acquired?
   Which M_B reads it?
-  What is EFP and what is F?
-  What remains unresolved as H?
+  What are F and F' under the same pre-update M_B?
+  Which part of E remains unresolved after finite review as H?
   Which unrecovered relation is described as ξ under this finite B?
 
 GENERATION
   What target-side relation is preserved?
   What relation is changed?
+  Which finite presentation / interaction section changes?
   Which M_B reading is expected to remain or change?
   What is only structural prediction?
   What still awaits actual listening?
@@ -652,6 +715,8 @@ Core
 ```
 
 ---
+
+*v0.4：現行RDL_Core v2.3の有限境界モデルへ同期。旧EFPを `RIB -> finite B -> RIB_B` へ置換し、対象側SILN/W・有限作用断面RIB_B・自己側M_Bを分離。BをPurpose・対象範囲・interaction/action section・選択関係・比較条件の有限固定として明示。F/F'は同じ更新前M_Bで形成し、非ゼロEを直ちにHへ入れず、有限review後のunresolved remainderだけを `H_vec -> H` へ接続する。W_music / Γ / C_rel / I(M_B) はMusic-local補助役割として維持し、T0 primitiveへ昇格させない。*
 
 *v0.3：RDL_Core v2.0に合わせ、M_Bを自己側の有限関係拘束構造へ更新。拘束対象に選択・更新を加え、Eを不整合として読む線を明確化。C_rel / I(M_B) をMusic側の任意補助descriptorとして受けるが、Music Core primitiveや普遍音楽定数へ昇格させない。*
 
